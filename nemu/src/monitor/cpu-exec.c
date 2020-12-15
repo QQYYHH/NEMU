@@ -41,6 +41,10 @@ void monitor_statistic() {
   else Log("Finish running in less than 1 ms and can not calculate the simulation frequency");
 }
 
+void monitor_instruction_num(){
+  Log("total guest instructions = %ld", g_nr_guest_instr);
+}
+
 bool log_enable() {
   return (g_nr_guest_instr >= LOG_START) && (g_nr_guest_instr <= LOG_END);
 }
@@ -64,7 +68,7 @@ static uint64_t get_time() {
 }
 
 /* Simulate how the CPU works. */
-void cpu_exec(uint64_t n) {
+void cpu_exec(uint64_t n) { // when input n is -1, n will be a very large number since the type of n is unsigned
   switch (nemu_state.state) {
     case NEMU_END: case NEMU_ABORT:
       printf("Program execution has ended. To restart the program, exit NEMU and run again.\n");

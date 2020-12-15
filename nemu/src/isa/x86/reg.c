@@ -42,6 +42,23 @@ void reg_test() {
 }
 
 void isa_reg_display() {
+  extern CPU_state cpu;
+  // regsl:
+  printf("32 bit registers...\n");
+  for(int i = 0; i < 8; i++){
+    printf("%s  :  %p  %u\n", regsl[i], &cpu.gpr[i]._32, cpu.gpr[i]._32);
+  }
+
+  printf("16 bit registers...\n");
+  for(int i = 0; i < 8; i++){
+    printf("%s  :  %p  %u\n", regsw[i], &cpu.gpr[i]._16, cpu.gpr[i]._16);
+  }
+
+  printf("8 bit registers...\n");
+  for(int i = 0; i < 8; i++){
+    printf("%s  :  %p  %u\n", regsb[i], &cpu.gpr[i & 3]._8[i >> 2], cpu.gpr[i & 3]._8[i >> 2]);
+  }
+  
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
