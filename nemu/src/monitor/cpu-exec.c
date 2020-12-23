@@ -91,6 +91,12 @@ void cpu_exec(uint64_t n) { // when input n is -1, n will be a very large number
 
 #ifdef DEBUG
     asm_print(this_pc, seq_pc - this_pc, n < MAX_INSTR_TO_PRINT);
+    extern bool check_watchpoint();
+    
+    bool success = check_watchpoint();
+    if(success){ // 触发检查点
+      nemu_state.state = NEMU_STOP; // 暂停程序运行
+    }
 
     /* TODO: check watchpoints here. */
 #endif

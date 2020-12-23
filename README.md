@@ -66,5 +66,20 @@ nemu
 `monitor/cpu-exec.c/cpu_exec()`模拟CPU执行一个程序的过程（取址、译码、执行）
 ### 编写简单调试器（简易gdb）
 主要完善 `monitor/debug/ui.c`
+完成表达式求值 `expr.c`
+实现 monitor的调试功能，相当于实现了简易的 gdb，功能如下：
+```bash
+help - Display informations about all supported commands
+c - Continue the execution of the program
+q - Exit NEMU
+si - execute the program step by step
+info - print registers status
+p - calculate the value of indicate expression
+x - x N EXPR: calculate the val of EXPR, using the result as the start mem addresss and output     N consecutive 4 bytes in hexademical form
+w - w EXPR: Pause the program when the value of EXPR changes
+d - d N : delete the watch point which serial number is N
+```
+
+### 开启PA2
 
 

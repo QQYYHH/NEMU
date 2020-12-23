@@ -7,8 +7,8 @@
 
 static uint8_t pmem[PMEM_SIZE] PG_ALIGN = {};
 
-void* guest_to_host(paddr_t addr) { return &pmem[addr]; }
-paddr_t host_to_guest(void *addr) { return (void *)pmem - addr; }
+void* guest_to_host(paddr_t addr) { return &pmem[addr - PMEM_BASE]; }
+paddr_t host_to_guest(void *addr) { return addr - (void*)pmem + PMEM_BASE; }
 
 IOMap* fetch_mmio_map(paddr_t addr);
 
