@@ -1,6 +1,7 @@
 #include <isa.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 #include "local-include/reg.h"
 
 const char *regsl[] = {"eax", "ecx", "edx", "ebx", "esp", "ebp", "esi", "edi"};
@@ -62,5 +63,26 @@ void isa_reg_display() {
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
-  return 0;
+  extern CPU_state cpu;
+  *success = false;
+  word_t res = 0;
+  for(int i = 0; i < 8; i++){
+    if(!strncmp(s, regsl[i], 3)){
+      *success = true;
+      res = cpu.gpr[i]._32;
+    }
+    else if(!strncmp(s, regsw[i], 2)){
+      *success = true;
+      res = cpu.gpr[i]._16;
+    }
+    else if(!strncmp(s, regsb[i], 2)){
+      *success = true;
+      res = cpu.gpr[i & 0x3]._8[i >> 2];
+    }
+  }
+  if(!strncmp(s, "pc", 2)){
+    *success = true;
+    res = cpu.pc;
+  }
+  return res;
 }
